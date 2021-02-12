@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nenu.dao.RoomDao">
+
+    <!-- 设置ResultMap结果映射集 -->
+    <resultMap id="roomMap" type="com.nenu.entity.Room">
+        <constructor>
+            <idArg column="roomId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomArea" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomState" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomContain" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomWindow" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="airCondition" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomWifi" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomPrice" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="bathRoom" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="bookingInstructions" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="rulesOfUse" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="descriptionsOfRoomType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="roomPhotos" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+
+    <!--  把所有的房间都查询出来-->
+    <!--public List searchEveryRoom();-->
+    <select id="searchEveryRoom" resultType="com.nenu.entity.Room">
+        select * from room
+    </select>
+
+    <!--  查询指定房型-->
+    <!--public List<Room> searchRoomByType(String roomType);-->
+    <select id="searchRoomByType" parameterType="java.lang.String" resultType="com.nenu.entity.Room">
+        select * from room where roomType = #{roomType}
+    </select>
+
+    <!--  查询某一个房号的客房-->
+    <!--public Room searchRoom(String roomId);-->
+    <select id="searchRoom" resultType="com.nenu.entity.Room">
+        select * from room where roomId = #{roomId}
+    </select>
+
+    <!--  添加房间-->
+    <!--public void addRoom(Room room);-->
+    <insert id="addRoom" parameterType="com.nenu.entity.Room">
+        insert into room(roomId,roomType,roomArea,roomState,roomContain,roomWindow,airCondition,roomWifi,roomPrice,bathRoom,remarks,bookingInstructions,rulesOfUse,descriptionsOfRoomType,roomPhotos)
+        values (#{roomId}, #{roomType}, #{roomArea},#{roomState}, #{roomContain}, #{roomWindow}, #{airCondition}, #{roomWifi}, #{roomPrice}, #{bathRoom}, #{remarks}, #{bookingInstructions},#{rulesOfUse},#{descriptionsOfRoomType},#{roomPhotos})
+    </insert>
+
+    <!--  删除房间-->
+    <!--public void deleteRoom(String roomId);-->
+    <delete id="deleteRoom" parameterType="java.lang.String">
+        delete from room where roomId = #{roomId}
+    </delete>
+
+    <!--  修改房间-->
+    <!--public void updateRoom(String roomId);-->
+    <update id="updateRoom" parameterType="com.nenu.entity.Room">
+        update room set
+        roomType = #{roomType},
+        roomArea = #{roomArea},
+        roomState = #{roomState},
+        roomContain = #{roomContain},
+        roomWindow = #{roomWindow},
+        airCondition = #{airCondition},
+        roomWifi = #{roomWifi},
+        roomPrice = #{roomPrice},
+        bathRoom = #{bathRoom},
+        remarks = #{remarks},
+        bookingInstructions = #{bookingInstructions},
+        rulesOfUse = #{rulesOfUse},
+        descriptionsOfRoomType = #{descriptionsOfRoomType},
+        roomPhotos = #{roomPhotos}
+        where roomId = #{roomId}
+    </update>
+
+
+
+
+</mapper>

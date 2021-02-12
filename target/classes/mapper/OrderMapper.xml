@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nenu.dao.OrderDao">
+    <!-- 设置ResultMap结果映射集 -->
+    <resultMap id="orderMap" type="com.nenu.dao.OrderDao">
+        <constructor>
+            <idArg column="orderId" jdbcType="VARCHAR" javaType="java.lang.Long"/>
+            <arg column="userName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="userGender" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="userIdType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="userIdCerti" jdbcType="VARCHAR" javaType="java.lang.Long"/>
+            <arg column="peopleNum" jdbcType="VARCHAR" javaType="java.lang.Integer"/>
+            <arg column="roomId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="orderType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="inDate" jdbcType="DATE" javaType="java.lang.String"/>
+            <arg column="endDate" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="rentMemory" jdbcType="VARCHAR" javaType="java.lang.Double"/>
+            <arg column="orderState" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="paymentTime" jdbcType="DATE" javaType="java.lang.String"/>
+            <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="paymentId" jdbcType="VARCHAR" javaType="java.lang.Double"/>
+            <arg column="userTel" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="payment" jdbcType="VARCHAR" javaType="java.lang.Double"/>
+        </constructor>
+    </resultMap>
+
+    <!--//查询所有的订单-->
+    <!--public List<Order> searchAllOrders();-->
+    <select id="searchAllOrders" resultType="com.nenu.entity.Order">
+        select * from order1
+    </select>
+
+    <!--//通过时间来查询订单-->
+    <!--public List<Order> searchOrdersByTime(@Param("time1")String time1, @Param("time2")String time2);-->
+    <select id="searchOrdersByTime" resultType="com.nenu.entity.Order">
+        select * from order1 where inDate between #{time1} and #{time2}
+    </select>
+
+    <!--//通过模糊查询查询订单（宾客姓名、证件编号、房间号）-->
+    <!--public List<Order> searchByKey();-->
+
+
+    <!--//通过订单id 修改订单-->
+    <!--public void editOrderById(String orderId);-->
+    <update id="editOrderById" parameterType="java.lang.String">
+        update order1 set userName = #{userName},
+        userGender = #{userGender},
+        userIdType = #{userType},
+        userIdCerti = #{userIdCerti},
+        peopleNum = #{peopleNum},
+        roomId = #{roomId},
+        orderType = #{orderType},
+        inDate = #{inDate},
+        endDate = #{endDate}
+        rentMemory = #{rentMemory},
+        orderState = #{orderState},
+        paymentTime = #{paymentTime},
+        remark = #{remark},
+        paymentId = #{paymentId},
+        userTel = #{userTel},
+        payment = #{payment}
+        where orderId = #{orderId}
+    </update>
+
+    <!--//添加订单-->
+    <!--public void addOrder(Order order);-->
+    <insert id="addOrder" parameterType="com.nenu.entity.Order">
+        INSERT INTO order1(orderId,userName,userGender,userIdType,userIdCerti,peopleNum,roomId,orderType,inDate,endDate,rentMemory,orderState,paymentTime,remark,paymentId,userTel,payment)
+        values (#{orderId},#{userName},#{userGender},#{userIdType},#{userIdCerti},#{peopleNum},#{roomId},#{orderType},#{inDate},#{endDate},#{rentMemory},#{orderState},#{paymentTime},#{remark},#{paymentId},#{userTel},#{payment}
+    </insert>
+
+    <!--//删除订单-->
+    <!--public void deleteOrderById(String orderId);-->
+    <delete id="deleteOrderById" parameterType="java.lang.String">
+        delete from order1 where orderId = #{orderId}
+    </delete>
+
+    <!--//通过订单id查询某个订单-->
+    <!--public Order selectOrderById(String orderId);-->
+    <select id="selectOrderById" parameterType="java.lang.String">
+        select * from order1 where orderId = #{orderId}
+    </select>
+
+    <!--//根据订单状态筛选订单-->
+    <!--public List<Order> selectOrderByState(String roomState);-->
+    <select id="selectOrderByState" parameterType="java.lang.String" resultType="com.nenu.entity.Order">
+        select * from order1 where orderState = #{orderState}
+    </select>
+
+    <!--//通过时间和状态查询订单-->
+    <!--public List<Order> selectOrderByTimeAndState(String time1, String time2, String orderState);-->
+    <select id="selectOrderByTimeAndState" parameterType="java.lang.String" resultType="com.nenu.entity.Order">
+        select * from order1 where orderState=#{orderState} and inDate between #{time1} and #{time2}
+    </select>
+
+    <!--//根据管理员查询订单-->
+    <!--public List<Order> selectOrderByAdmin(String adminId);-->
+    <select id="selectOrderByAdmin" parameterType="java.lang.String" resultType="com.nenu.entity.Order">
+        select from order1 where adminId = #{adminId}
+    </select>
+
+</mapper>
+

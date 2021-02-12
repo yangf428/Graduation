@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nenu.dao.AdminDao">
+
+    <!-- 设置ResultMap结果映射集 -->
+    <resultMap id="adminMap" type="com.nenu.dao.AdminDao">
+        <constructor>
+            <idArg column="adminId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="adminName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="adminPwd" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="adminTel" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="adminLevel" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+
+    <!--   查询所有员工的信息-->
+    <!--public List<Admin> searchAllAdmin();-->
+    <select id="searchAllAdmin" resultType="com.nenu.entity.Admin">
+        select * from admin
+    </select>
+
+    <!--    用户的登录 -->
+    <!--public Admin login(String adminId);-->
+    <select id="login" parameterType="java.lang.String" resultType="com.nenu.entity.Admin">
+        Select * From admin Where adminId = #{adminId}
+    </select>
+
+    <!--    通过adminId 修改个人信息（电话号）-->
+    <!--public void selfEdit(Admin admin);-->
+    <update id="selfEdit" parameterType="com.nenu.entity.Admin">
+        update admin set adminTel = #{adminTel} where adminId = #{adminId}
+    </update>
+
+    <!--    通过adminId 修改手机号-->
+    <!--public void selfChangePass(Admin admin);-->
+    <update id="selfChangePass" parameterType="com.nenu.entity.Admin">
+        update admin set adminPwd = #{adminPwd} where adminId = #{adminId}
+    </update>
+
+    <!--    老板添加员工-->
+    <!--public void addAdmin(Admin admin);-->
+    <insert id="addAdmin" parameterType="com.nenu.entity.Admin">
+        insert into admin(adminId, adminName, adminPwd, adminTel, adminLevel) values (#{adminId}, #{adminName}, #{adminPwd}, #{adminTel}, #{adminLevel})
+    </insert>
+
+    <!--    老板删除员工-->
+    <!--public void deleteAdmin(String adminId);-->
+    <delete id="deleteAdmin" parameterType="java.lang.String">
+        delete from admin where adminId = #{adminId}
+    </delete>
+
+
+
+
+</mapper>
